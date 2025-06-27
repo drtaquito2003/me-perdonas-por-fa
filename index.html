@@ -26,12 +26,12 @@
     .button-container {
       position: fixed;
       inset: 0;
-      pointer-events: none; /* Permite que no bloquee clics */
+      pointer-events: none;
     }
 
     .button-group {
       display: inline-flex;
-      gap: 20px;
+      gap: 80px;
     }
 
     button {
@@ -56,10 +56,10 @@
   </style>
 </head>
 <body>
-  <h1>¿Quieres ser mi novia?</h1>
+  <h1>¿Me perdonas?</h1>
   
   <div class="button-group">
-    <button id="yes" onclick="alert('¡Hola nena! 😏')">Sí</button>
+    <button id="yes" onclick="alert('¡Sabía que me perdonarías! ❤️')">Sí</button>
     <button id="no">No</button>
   </div>
 
@@ -69,23 +69,30 @@
     const noBtn = document.getElementById("no");
     const container = document.querySelector(".button-container");
 
+    let botonActivo = false;
+
     function moverBoton() {
-      const maxX = window.innerWidth - noBtn.offsetWidth - 10; // 10px margen de seguridad
+      const maxX = window.innerWidth - noBtn.offsetWidth - 10;
       const maxY = window.innerHeight - noBtn.offsetHeight - 10;
 
       const newX = Math.max(10, Math.random() * maxX);
       const newY = Math.max(10, Math.random() * maxY);
 
-      noBtn.style.position = "absolute";
+      // Solo la primera vez cambia al container
+      if (!botonActivo) {
+        noBtn.style.position = "absolute";
+        container.appendChild(noBtn);
+        botonActivo = true;
+      }
+
       noBtn.style.left = newX + "px";
       noBtn.style.top = newY + "px";
-
-      container.appendChild(noBtn);
     }
 
-    container.addEventListener("mousemove", (e) => {
+    // 🔥 Escuchar en todo el documento, no solo en el container
+    document.addEventListener("mousemove", (e) => {
       const rect = noBtn.getBoundingClientRect();
-      const distance = 120;
+      const distance = 100;
 
       const mouseX = e.clientX;
       const mouseY = e.clientY;
