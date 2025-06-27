@@ -7,17 +7,21 @@
     body {
       font-family: 'Arial', sans-serif;
       text-align: center;
-      margin-top: 100px;
+      margin: 0;
       background-color: #fdf6e3;
+      height: 100vh;
+      overflow: hidden;
+      position: relative;
     }
     h1 {
       font-size: 2.5em;
       color: #333;
+      margin-top: 60px;
     }
     .button-container {
-      margin-top: 40px;
       position: relative;
-      height: 200px;
+      width: 100%;
+      height: 100%;
     }
     button {
       font-size: 1.2em;
@@ -27,15 +31,20 @@
       border: none;
       border-radius: 8px;
       transition: 0.2s;
+      position: absolute;
     }
     #yes {
       background-color: #4CAF50;
       color: white;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
     }
     #no {
       background-color: #f44336;
       color: white;
-      position: absolute;
+      left: 60%;
+      top: 50%;
     }
   </style>
 </head>
@@ -50,9 +59,17 @@
     const noBtn = document.getElementById("no");
     const container = document.querySelector(".button-container");
 
+    function moverBoton() {
+      const newX = Math.random() * (container.offsetWidth - noBtn.offsetWidth);
+      const newY = Math.random() * (container.offsetHeight - noBtn.offsetHeight);
+
+      noBtn.style.left = newX + "px";
+      noBtn.style.top = newY + "px";
+    }
+
     container.addEventListener("mousemove", (e) => {
       const rect = noBtn.getBoundingClientRect();
-      const distance = 250;
+      const distance = 250; // Distancia para huir
 
       const mouseX = e.clientX;
       const mouseY = e.clientY;
@@ -65,33 +82,14 @@
       const dist = Math.sqrt(dx * dx + dy * dy);
 
       if (dist < distance) {
-        const offsetX = (Math.random() - 600) * 700;
-        const offsetY = (Math.random() - 600) * 700;
-
-        const newX = Math.min(
-          container.offsetWidth - noBtn.offsetWidth,
-          Math.max(0, noBtn.offsetLeft + offsetX)
-        );
-        const newY = Math.min(
-          container.offsetHeight - noBtn.offsetHeight,
-          Math.max(0, noBtn.offsetTop + offsetY)
-        );
-
-        noBtn.style.left = newX + "px";
-        noBtn.style.top = newY + "px";
+        moverBoton();
       }
     });
-    
-    noBtn.addEventListener("touchstart", () => {
-  const newX = Math.random() * (container.offsetWidth - noBtn.offsetWidth);
-  const newY = Math.random() * (container.offsetHeight - noBtn.offsetHeight);
 
-  noBtn.style.left = newX + "px";
-  noBtn.style.top = newY + "px";
-});
-    
+    // Para móviles (iPhone, Android)
+    noBtn.addEventListener("touchstart", moverBoton);
 
-    // 🛑 Mensaje al intentar cerrar la pestaña
+    // Mensaje si intentan cerrar la pestaña
     window.onbeforeunload = function() {
       return "¿De verdad quieres dejarme sin perdonarme? 😢";
     };
