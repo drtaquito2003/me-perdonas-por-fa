@@ -52,7 +52,7 @@
 
     container.addEventListener("mousemove", (e) => {
       const rect = noBtn.getBoundingClientRect();
-      const distance = 1500;
+      const distance = 250;
 
       const mouseX = e.clientX;
       const mouseY = e.clientY;
@@ -65,8 +65,8 @@
       const dist = Math.sqrt(dx * dx + dy * dy);
 
       if (dist < distance) {
-        const offsetX = (Math.random() - 0.5) * 300;
-        const offsetY = (Math.random() - 0.5) * 300;
+        const offsetX = (Math.random() - 0.5) * 600;
+        const offsetY = (Math.random() - 0.5) * 600;
 
         const newX = Math.min(
           container.offsetWidth - noBtn.offsetWidth,
