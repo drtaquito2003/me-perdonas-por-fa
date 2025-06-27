@@ -81,6 +81,15 @@
         noBtn.style.top = newY + "px";
       }
     });
+    
+    noBtn.addEventListener("touchstart", () => {
+  const newX = Math.random() * (container.offsetWidth - noBtn.offsetWidth);
+  const newY = Math.random() * (container.offsetHeight - noBtn.offsetHeight);
+
+  noBtn.style.left = newX + "px";
+  noBtn.style.top = newY + "px";
+});
+    
 
     // 🛑 Mensaje al intentar cerrar la pestaña
     window.onbeforeunload = function() {
