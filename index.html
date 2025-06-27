@@ -11,65 +11,81 @@
       background-color: #fdf6e3;
       height: 100vh;
       overflow: hidden;
-      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
     }
+
     h1 {
       font-size: 2.5em;
       color: #333;
-      margin-top: 60px;
+      margin-bottom: 40px;
     }
+
     .button-container {
       position: relative;
       width: 100%;
       height: 100%;
     }
+
+    .button-group {
+      display: inline-flex;
+      gap: 20px;
+    }
+
     button {
       font-size: 1.2em;
       padding: 10px 20px;
-      margin: 10px;
       cursor: pointer;
       border: none;
       border-radius: 8px;
       transition: 0.2s;
-      position: absolute;
+      position: relative;
     }
+
     #yes {
       background-color: #4CAF50;
       color: white;
-      left: 50%;
-      top: 50%;
-      transform: translate(-50%, -50%);
     }
+
     #no {
       background-color: #f44336;
       color: white;
-      left: 60%;
-      top: 50%;
     }
   </style>
 </head>
 <body>
   <h1>¿Me perdonas?</h1>
-  <div class="button-container">
+  
+  <div class="button-group">
     <button id="yes" onclick="alert('¡Sabía que me perdonarías! ❤️')">Sí</button>
     <button id="no">No</button>
   </div>
+
+  <div class="button-container"></div>
 
   <script>
     const noBtn = document.getElementById("no");
     const container = document.querySelector(".button-container");
 
+    // Función para mover el botón "No"
     function moverBoton() {
-      const newX = Math.random() * (container.offsetWidth - noBtn.offsetWidth);
-      const newY = Math.random() * (container.offsetHeight - noBtn.offsetHeight);
+      const newX = Math.random() * (window.innerWidth - noBtn.offsetWidth);
+      const newY = Math.random() * (window.innerHeight - noBtn.offsetHeight);
 
+      noBtn.style.position = "absolute";
       noBtn.style.left = newX + "px";
       noBtn.style.top = newY + "px";
+
+      // Lo movemos al contenedor para que quede flotando sobre la pantalla
+      container.appendChild(noBtn);
     }
 
+    // Para PC: huye cuando acercan el mouse
     container.addEventListener("mousemove", (e) => {
       const rect = noBtn.getBoundingClientRect();
-      const distance = 250; // Distancia para huir
+      const distance = 200;
 
       const mouseX = e.clientX;
       const mouseY = e.clientY;
@@ -86,10 +102,10 @@
       }
     });
 
-    // Para móviles (iPhone, Android)
+    // Para móviles: huye cuando lo intentan tocar
     noBtn.addEventListener("touchstart", moverBoton);
 
-    // Mensaje si intentan cerrar la pestaña
+    // Mensaje al intentar cerrar la pestaña
     window.onbeforeunload = function() {
       return "¿De verdad quieres dejarme sin perdonarme? 😢";
     };
